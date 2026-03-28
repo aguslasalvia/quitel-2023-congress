@@ -1,112 +1,92 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { checkIsMobile } from "../../hooks/checkIsMobile";
-import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { Menu, X } from "lucide-react";
+import { useState } from "react";
+import "./Navbar.css";
+
 export default function Navbar() {
-
-  const isMobile = checkIsMobile();
-  const [isLandscape, setIsLandscape] = useState(window.orientation == 90 ? true : false);
   const navigate = useNavigate();
-  window.addEventListener("orientationchange", () => {
-    setIsLandscape(!isLandscape);
-  });
+  const [isOpen, setIsOpen] = useState(false);
 
-  // Toggles css .open class on nav component
-  const showNav = () => {
-    document.getElementById("nav").classList.toggle("open");
-  }
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
 
-  if (window.matchMedia("only screen and (max-width: 1366px)").matches) {
-    // listens for clicks outside the mobile menu to close it 
-    document.onclick = function(clickEvent) {
-      if (clickEvent.target.id !== 'nav' && clickEvent.target.id !== 'checkbox' && clickEvent.target.id !== 'menuStamp') {
-        document.getElementById("nav").classList.remove("open");
-        document.getElementById("checkbox").checked = false;
-      }
-    }
-  }
+  const closeMenu = () => {
+    setIsOpen(false);
+  };
 
   const navigateHome = () => {
     navigate("/");
-  }
-
-  useEffect(() => {
-  }, [isLandscape, isMobile])
+  };
 
   return (
-    <header>
-      {/* arch bg */}
-      <div className="header-visible">
-        {/* {isMobile ? */}
-        {/* isLandscape ? ( */}
-        {/* isMobile && isLandscape */}
-        {/* <img className="nav-arch" src="assets/svg/arch-landscape.svg" alt="" /> */}
-        {/* ) : ( */}
-        {/* isMobile && !isLandscape */}
-        {/* <img className="nav-arch" src="assets/svg/arch-portrait.svg" alt="" /> */}
-        {/* ) : ( */}
-        {/* !isMobile && !isLandscape (Desktops) */}
-        {/* <img className="nav-arch" src="assets/svg/arch-landscape.svg" alt="" /> */}
-        {/* ) */}
-        {/* } */}
+    <>
+      <header className="navbar-header">
+        <div className="header-visible">
+          <img
+            src="assets/images/stamp.png"
+            alt="QUITEL 2023"
+            className="stamp"
+            onClick={navigateHome}
+          />
 
-        {/* stamp */}
-        <img src="assets/images/stamp.png" alt="QUITEL 2023" className="stamp" onClick={navigateHome} />
+          <button className="menu-toggle" onClick={toggleMenu} aria-label="Toggle menu">
+            <Menu size={24} />
+          </button>
 
-        {/* hamburguer menu */}
-        <div id="menu-toggle">
-          <input type="checkbox" id="checkbox" onClick={showNav} />
-          <span></span>
-          <span></span>
-          <span></span>
-        </div >
+          <nav className="nav-desktop">
+            <ul id="menu">
+              {['Home', 'About', 'Registration', 'Speakers', 'Venue', 'Contact'].map((item) => {
+                const path = item === 'Home' ? '/' :
+                  `/${item.toLowerCase().replace(/ /g, '-')}`;
+                return (
+                  <li key={item}>
+                    <NavLink
+                      className="nav-link"
+                      to={path}
+                    >
+                      {item}
+                    </NavLink>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
+        </div>
+      </header>
 
-        {/* nav */}
-        <nav role="navigation" id="nav">
-          <ul id="menu">
+      <div className={`nav-backdrop ${isOpen ? 'open' : ''}`} onClick={closeMenu}></div>
 
-            <motion.li transition={{ duration: 0.1 }} whileTap={{ scale: 0.9 }}>
-              <NavLink className="nav-link" to="/">Home</NavLink>
-            </motion.li>
-
-            <motion.li transition={{ duration: 0.1 }} whileTap={{ scale: 0.9 }}>
-              <NavLink className="nav-link" to="/about">About</NavLink>
-            </motion.li>
-
-            <motion.li transition={{ duration: 0.1 }} whileTap={{ scale: 0.9 }}>
-              <NavLink className="nav-link" to="/committees">Committees</NavLink>
-            </motion.li>
-
-            <motion.li transition={{ duration: 0.1 }} whileTap={{ scale: 0.9 }}>
-              <NavLink className="nav-link" to="/registration">Registration</NavLink>
-            </motion.li>
-
-            <motion.li transition={{ duration: 0.1 }} whileTap={{ scale: 0.9 }}>
-              <NavLink className="nav-link" to="/speakers">Speakers</NavLink>
-            </motion.li>
-
-            <motion.li transition={{ duration: 0.1 }} whileTap={{ scale: 0.9 }}>
-              <NavLink className="nav-link" to="/abstract-submission">Abstract submission</NavLink>
-            </motion.li>
-
-            <motion.li transition={{ duration: 0.1 }} whileTap={{ scale: 0.9 }}>
-              <NavLink className="nav-link" to="/venue">Venue</NavLink>
-            </motion.li>
-
-            <motion.li transition={{ duration: 0.1 }} whileTap={{ scale: 0.9 }}>
-              <NavLink className="nav-link" to="/hotel">Hotel</NavLink>
-            </motion.li>
-
-            <motion.li transition={{ duration: 0.1 }} whileTap={{ scale: 0.9 }}>
-              <NavLink className="nav-link" to="/contact">Contact us</NavLink>
-            </motion.li>
-
-          </ul >
-          {/* menu stamp */}
-          <img src="assets/images/stamp.png" alt="QUITEL 2023" className="menu-stamp" id="menuStamp" />
-        </nav>
-      </div>
-
-    </header >
+      <nav className={`nav-mobile ${isOpen ? 'open' : ''}`}>
+        <div className="nav-mobile-header">
+          <button className="nav-close-btn" onClick={closeMenu} aria-label="Close menu">
+            <X size={22} />
+          </button>
+        </div>
+        <ul id="menu-mobile">
+          {['Home', 'About', 'Registration', 'Speakers', 'Venue', 'Contact'].map((item, index) => {
+            const path = item === 'Home' ? '/' :
+              `/${item.toLowerCase().replace(/ /g, '-')}`;
+            return (
+              <motion.li
+                key={item}
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: isOpen ? 1 : 0, x: isOpen ? 0 : 50 }}
+                transition={{ delay: index * 0.06 }}
+              >
+                <NavLink
+                  className="nav-link"
+                  to={path}
+                  onClick={closeMenu}
+                >
+                  {item}
+                </NavLink>
+              </motion.li>
+            );
+          })}
+        </ul>
+      </nav>
+    </>
   )
 }

@@ -1,5 +1,6 @@
 .info-title.fees {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
 }
 
 .info-title.fees.paypal {
@@ -7,7 +8,9 @@
 }
 
 .page-title-p.fees {
-  font-size: clamp(1rem, 2.2vw, 0.75rem);
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  font-weight: 500;
+  opacity: 0.8;
 }
 
 .info-text .heading p {
@@ -15,26 +18,22 @@
 }
 
 .info-text .line.heading.second {
-  margin-top: 1rem;
+  margin-top: 1.5rem;
 }
 
-@media screen and (orientation: landscape) and (max-width: 1366px) {
-  .page-title-p.fees {
-    font-size: clamp(0.5rem, 2.2vw, 0.75rem);
-  }
-
+@media screen and (min-width: 720px) and (max-width: 1023px) {
   .info-title.fees {
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
   }
 
   .info-title.fees.paypal {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
   }
 }
 
-@media screen and (min-width: 1367px) and (max-width: 1921px) {
+@media screen and (min-width: 1024px) {
   .info-title.fees {
-    margin-bottom: 1.2rem;
+    margin-bottom: 1.5rem;
   }
 
   .info-title.fees.paypal {
@@ -42,6 +41,16 @@
   }
 
   .page-title-p.fees {
-    font-size: clamp(0.8rem, 2.2vw, 0.75rem);
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+  }
+}
+
+@media screen and (min-width: 1920px) {
+  .info-title.fees {
+    margin-bottom: 2rem;
+  }
+
+  .info-title.fees.paypal {
+    margin-bottom: 1.25rem;
   }
 }
