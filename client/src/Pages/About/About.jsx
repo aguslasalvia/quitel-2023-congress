@@ -78,13 +78,14 @@ function CommitteeSection({ title, icon: Icon, members }) {
         <Icon size={18} />
         <h2 className="info-title">{title}</h2>
       </div>
-      <div className="info-text">
-        <ul className="committee-list">
-          {members.map((member, index) => (
-            <li key={index}>{member}</li>
-          ))}
-        </ul>
-      </div>
+      <ul className="committee-list">
+        {members.map((member, index) => (
+          <li key={index} className="committee-item">
+            <span className="committee-avatar">{member[0]}</span>
+            <span className="committee-name">{member}</span>
+          </li>
+        ))}
+      </ul>
     </motion.div>
   );
 }

@@ -37,21 +37,21 @@ export default function Navbar() {
 
           <nav className="nav-desktop">
             <ul id="menu">
-              {['Home', 'About', 'Registration', 'Speakers', 'Venue', 'Contact'].map((item) => {
+              {['Home', 'About', 'Speakers', 'Venue', 'Contact'].map((item) => {
                 const path = item === 'Home' ? '/' :
                   `/${item.toLowerCase().replace(/ /g, '-')}`;
                 return (
                   <li key={item}>
-                    <NavLink
-                      className="nav-link"
-                      to={path}
-                    >
+                    <NavLink className="nav-link" to={path}>
                       {item}
                     </NavLink>
                   </li>
                 );
               })}
             </ul>
+            <NavLink to="/registration" className="nav-cta">
+              Register
+            </NavLink>
           </nav>
         </div>
       </header>

@@ -3,151 +3,263 @@ import Footer from "../../components/Footer/Footer";
 import { motion } from "framer-motion";
 import { abstract, abstractFiles, sendAbstract } from "../../services/FormsService";
 import { validateData } from "../../hooks/validateData";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import { Mail, User, FileText, Upload, Check, X, ChevronRight } from "lucide-react";
 
 export default function AbstractForm() {
+  const [formData, setFormData] = useState(abstract);
+  const [files, setFiles] = useState(abstractFiles);
+  const [errors, setErrors] = useState({});
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isDisabled, setIsDisabled] = useState(false);
+  const navigate = useNavigate();
 
-     // form data object
-     const [formData, setFormData] = useState(abstract);
-     // receipts object
-     const [files, setFiles] = useState(abstractFiles);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
-     // Error message
-     const [errorMessage, setErrorMessage] = useState("");
-     // Button disabled boolean
-     const [isDisabled, setIsDisabled] = useState(false);
+  const handleChange = (field, value) => {
+    setFormData({ ...formData, [field]: value });
+    if (errors[field]) setErrors({ ...errors, [field]: false });
+  };
 
-     // navigation hook
-     const navigate = useNavigate();
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.email) newErrors.email = true;
+    if (!formData.firstName) newErrors.firstName = true;
+    if (!formData.lastName) newErrors.lastName = true;
+    if (!formData.title) newErrors.title = true;
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
+  const handleSubmit = () => {
+    if (!validateForm()) {
+      setErrorMessage("Please fill in all required fields.");
+      return;
+    }
+    if (!validateData(formData) || (!files.editableFormat && !files.pdfFormat)) {
+      setErrorMessage(
+        files.editableFormat || files.pdfFormat
+          ? "Please fill in all required fields."
+          : "Please upload your abstract in at least one format."
+      );
+      return;
+    }
+    setIsDisabled(true);
+    setErrorMessage("");
+    sendAbstract(
+      formData,
+      { ...files, email: formData.email },
+      () => navigate("/success"),
+      setErrorMessage,
+      setIsDisabled
+    );
+  };
 
-     const navigateOnSuccess = () => {
-          navigate("/success");
-     }
+  return (
+    <motion.div
+      className="page-wrapper"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <motion.h1
+        className="page-title"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+      >
+        <p className="page-title-p">Abstract</p>
+        <p className="page-title-p">Submission Form</p>
+      </motion.h1>
 
-     // hidden button refs
-     const hiddenEditableFormatButton = useRef(null);
-     const hiddenPdfFormatButton = useRef(null);
+      <div className="page-info form">
+        <motion.div
+          className="form-modern"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          {/* Personal info */}
+          <div className="form-card">
+            <div className="form-card-header">
+              <h2>Personal Information</h2>
+              <span className="badge">XLVI QUITEL 2023</span>
+            </div>
+            <div className="form-card-body">
+              <div className={`form-field ${errors.email ? "error" : ""}`}>
+                <label>
+                  <Mail size={16} />
+                  Email <span className="required">*</span>
+                </label>
+                <input
+                  type="email"
+                  placeholder="john.doe@example.com"
+                  value={formData.email}
+                  onChange={(e) => {
+                    handleChange("email", e.target.value);
+                    setFiles({ ...files, email: e.target.value });
+                  }}
+                />
+                {errors.email && <span className="error-text">Email is required</span>}
+              </div>
 
-     const handleSubmit = () => {
-          // This function will not be called as long as if isDisabled is
-          // true, therefore "disabling" the button until a server response is received.
+              <div className="form-row-2">
+                <div className={`form-field ${errors.firstName ? "error" : ""}`}>
+                  <label>
+                    <User size={16} />
+                    First Name <span className="required">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="John"
+                    value={formData.firstName}
+                    onChange={(e) => handleChange("firstName", e.target.value)}
+                  />
+                  {errors.firstName && <span className="error-text">Required</span>}
+                </div>
 
-          if (validateData(formData) && (files.editableFormat || files.pdfFormat)) {
-               setIsDisabled(true);
-               setErrorMessage("");
-               sendAbstract(formData, files, navigateOnSuccess, setErrorMessage, setIsDisabled);
-          } else {
-               setErrorMessage("There may be an empty field, please check.");
-          }
-     }
+                <div className={`form-field ${errors.lastName ? "error" : ""}`}>
+                  <label>
+                    <User size={16} />
+                    Last Name <span className="required">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Doe"
+                    value={formData.lastName}
+                    onChange={(e) => handleChange("lastName", e.target.value)}
+                  />
+                  {errors.lastName && <span className="error-text">Required</span>}
+                </div>
+              </div>
+            </div>
+          </div>
 
-     const previousStep = () => {
-          navigate("/abstract-submission");
-     }
+          {/* Abstract title */}
+          <div className="form-card">
+            <div className="form-card-header">
+              <h2>Abstract Details</h2>
+            </div>
+            <div className="form-card-body">
+              <div className={`form-field ${errors.title ? "error" : ""}`}>
+                <label>
+                  <FileText size={16} />
+                  Abstract Title <span className="required">*</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="Title of your abstract"
+                  value={formData.title}
+                  onChange={(e) => handleChange("title", e.target.value)}
+                />
+                {errors.title && <span className="error-text">Required</span>}
+              </div>
+            </div>
+          </div>
 
-     useEffect(() => {
-          // Scrolls to top when rendered.
-          // Otherwise when switching routes the user would remain at the same Y position in the window.
-          window.scrollTo(0, 0);
-     }, []);
+          {/* File uploads */}
+          <div className="form-card">
+            <div className="form-card-header">
+              <h2>Upload Abstract</h2>
+            </div>
+            <div className="form-card-body">
+              <div className="form-note">
+                <p>
+                  Upload your abstract in at least one format. Both DOC/ODT and PDF are
+                  accepted. At least one file is required.
+                </p>
+              </div>
 
-     return (
-          <motion.div className="page-wrapper"
-               initial={{ opacity: 0 }}
-               animate={{ opacity: 1 }}
-               exit={{ opacity: 0 }}
-          >
+              {/* Editable format */}
+              <div className="form-upload">
+                <label>
+                  <Upload size={16} />
+                  Editable format <span style={{ color: "var(--black-light)", fontWeight: 400 }}>(DOC / ODT)</span>
+                </label>
+                {files.editableFormat ? (
+                  <div className="file-selected">
+                    <Check size={14} />
+                    <span>{files.editableFormat.name}</span>
+                    <button
+                      type="button"
+                      onClick={() => setFiles({ ...files, editableFormat: null })}
+                    >
+                      <X size={14} />
+                    </button>
+                  </div>
+                ) : null}
+                <label className="upload-btn">
+                  <Upload size={15} />
+                  Choose file
+                  <input
+                    type="file"
+                    accept=".odt, .docx, .doc"
+                    onChange={(e) => setFiles({ ...files, editableFormat: e.target.files[0] })}
+                  />
+                </label>
+              </div>
 
-               <div className="page-info form">
-                    <div className="info-box">
-                         <h1 className="info-title">Abstract submission form</h1>
-                         <div className="info-text">
-                              <div className="line">
-                                   <p>XLVI International Congress of Theoretical Chemists of Latin Expression</p>
-                              </div>
+              {/* PDF format */}
+              <div className="form-upload">
+                <label>
+                  <Upload size={16} />
+                  PDF format
+                </label>
+                {files.pdfFormat ? (
+                  <div className="file-selected">
+                    <Check size={14} />
+                    <span>{files.pdfFormat.name}</span>
+                    <button
+                      type="button"
+                      onClick={() => setFiles({ ...files, pdfFormat: null })}
+                    >
+                      <X size={14} />
+                    </button>
+                  </div>
+                ) : null}
+                <label className="upload-btn">
+                  <Upload size={15} />
+                  Choose file
+                  <input
+                    type="file"
+                    accept=".pdf"
+                    onChange={(e) => setFiles({ ...files, pdfFormat: e.target.files[0] })}
+                  />
+                </label>
+              </div>
+            </div>
+          </div>
 
-                              {/* Email */}
-                              <div className="form-input-wrapper form-first">
-                                   <label className="form-label" htmlFor="Email">Email<span>*</span></label>
-                                   <input className="form-input" type="email" id="email" name="Email"
-                                        value={formData.email}
-                                        onChange={(e) => {
-                                             setFormData({ ...formData, email: e.target.value })
-                                             setFiles({ ...files, email: e.target.value })
-                                        }}
-                                   />
-                              </div>
-                              {/* First name */}
-                              <div className="form-input-wrapper">
-                                   <label className="form-label" htmlFor="FirstName">First name<span>*</span></label>
-                                   <input className="form-input" type="text" id="firstname" name="FirstName"
-                                        value={formData.firstName}
-                                        onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                                   />
-                              </div>
-                              {/* Last name */}
-                              <div className="form-input-wrapper">
-                                   <label className="form-label" htmlFor="LastName">Last name<span>*</span></label>
-                                   <input className="form-input" type="text" id="lastname" name="LastName"
-                                        value={formData.lastName}
-                                        onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-                                   />
-                              </div>
-                              {/* Abstract title */}
-                              <div className="form-input-wrapper">
-                                   <label className="form-label" htmlFor="Title">Abstract title<span>*</span></label>
-                                   <input className="form-input" type="text" id="title" name="Title"
-                                        value={formData.title}
-                                        onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                                   />
-                              </div>
+          {errorMessage && <div className="form-alert">{errorMessage}</div>}
 
-                              {/* Editable format file */}
-                              <div className="form-upload-wrapper">
-                                   <label className="form-label">Upload your abstract in DOC or ODT editable format</label>
-                                   {files.editableFormat && <div className="line">{files.editableFormat.name}</div>}
-                                   <div className="upload-button"
-                                        onClick={() => { hiddenEditableFormatButton.current.click() }}
-                                   >Select from my computer</div>
-                                   {/* hidden upload button */}
-                                   <input
-                                        type="file"
-                                        accept=".odt, .docx, .doc"
-                                        style={{ display: 'none' }}
-                                        ref={hiddenEditableFormatButton}
-                                        onChange={(e) => setFiles({ ...files, editableFormat: e.target.files[0] })}
-                                   />
-                              </div>
+          <div className="form-actions">
+            <button
+              className="btn btn-secondary"
+              onClick={() => navigate("/abstract-submission")}
+            >
+              Back
+            </button>
+            <button
+              className="btn btn-primary"
+              onClick={handleSubmit}
+              disabled={isDisabled}
+            >
+              {isDisabled ? (
+                "Sending..."
+              ) : (
+                <>
+                  Submit Abstract
+                  <ChevronRight size={18} />
+                </>
+              )}
+            </button>
+          </div>
+        </motion.div>
+      </div>
 
-                              {/* PDF format file */}
-                              <div className="form-upload-wrapper">
-                                   <label className="form-label">Upload your abstract in PDF format</label>
-                                   {files.pdfFormat && <div className="line">{files.pdfFormat.name}</div>}
-                                   <div className="upload-button"
-                                        onClick={() => { hiddenPdfFormatButton.current.click() }}
-                                   >Select from my computer</div>
-                                   {/* hidden upload button */}
-                                   <input
-                                        type="file"
-                                        accept=".pdf"
-                                        style={{ display: 'none' }}
-                                        ref={hiddenPdfFormatButton}
-                                        onChange={(e) => setFiles({ ...files, pdfFormat: e.target.files[0] })}
-                                   />
-                              </div>
-
-                              {errorMessage && <p className="form-error-message">{errorMessage}</p>}
-
-                              {/* Submit button */}
-                              <div className="button-long-blue abstract-submit-button"
-                                   onClick={isDisabled ? null : handleSubmit}
-                              >{isDisabled ? "Sending..." : "Submit"}</div>
-                              <div className="button-long-pink" onClick={previousStep}>Back</div>
-                         </div>
-                    </div>
-               </div>
-               <Footer />
-          </motion.div>
-     )
+      <Footer />
+    </motion.div>
+  );
 }

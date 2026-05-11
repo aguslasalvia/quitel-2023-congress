@@ -57,22 +57,19 @@ export default function Speakers() {
                 target="_blank"
                 rel="noreferrer"
                 className="speaker-item"
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.15 + index * 0.03 }}
-                whileHover={{ scale: 1.01, x: 4 }}
+                transition={{ delay: 0.12 + index * 0.03 }}
               >
                 <div className="speaker-avatar">
                   {speaker.name.split(' ').map(n => n[0]).slice(0, 2).join('')}
                 </div>
                 <div className="speaker-content">
-                  <span className="speaker-name">
-                    <span className="speaker-role">{speaker.role}.</span>
-                    {speaker.name}
-                  </span>
+                  <span className="speaker-role">{speaker.role}</span>
+                  <span className="speaker-name">{speaker.name}</span>
                   <span className="speaker-affiliation">{speaker.affiliation}</span>
                 </div>
-                <ExternalLink size={16} className="speaker-link" />
+                <ExternalLink size={15} className="speaker-link" />
               </motion.a>
             ))}
           </div>

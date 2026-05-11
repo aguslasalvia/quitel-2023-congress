@@ -7,30 +7,23 @@
 .hero {
   position: relative;
   width: 100%;
-  min-height: 80vh;
+  min-height: 85vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: 
-    linear-gradient(180deg, transparent 0%, var(--bg) 100%),
+  background:
+    linear-gradient(
+      180deg,
+      rgba(13, 27, 42, 0.82) 0%,
+      rgba(13, 27, 42, 0.60) 45%,
+      rgba(13, 27, 42, 0.15) 70%,
+      var(--bg) 100%
+    ),
     url("/assets/images/montevideo-mobile.png");
   background-size: cover;
   background-position: center top;
-  padding: 4.5rem 1rem 2.5rem;
-}
-
-.hero::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    radial-gradient(ellipse at 30% 20%, rgba(82, 138, 164, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 70% 60%, rgba(201, 117, 130, 0.06) 0%, transparent 50%);
-  pointer-events: none;
+  padding: 4.5rem 1rem 3rem;
 }
 
 .hero-content {
@@ -57,29 +50,30 @@
   align-items: center;
   gap: 0.4rem;
   padding: 0.3rem 0.875rem;
-  background: var(--white);
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(8px);
   border-radius: var(--radius-full);
-  margin-bottom: 0.75rem;
-  box-shadow: var(--shadow-sm);
+  margin-bottom: 0.875rem;
   animation: fadeIn 0.5s ease-out 0.1s both;
 }
 
 .year {
   font-size: 0.8rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
-  color: var(--blue);
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.95);
 }
 
 .title {
-  font-size: clamp(1rem, 3.5vw, 1.6rem);
+  font-size: clamp(1.1rem, 3.5vw, 1.7rem);
   font-weight: 700;
-  line-height: 1.2;
-  margin-bottom: 0.75rem;
-  background: var(--gradient-text);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  line-height: 1.25;
+  margin-bottom: 0.875rem;
+  color: white;
+  -webkit-text-fill-color: white;
+  background: none;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.4);
   animation: fadeInUp 0.5s ease-out 0.2s both;
 }
 
@@ -88,25 +82,72 @@
   flex-direction: column;
   align-items: center;
   gap: 0.2rem;
-  padding: 0.6rem 1.25rem;
-  background: var(--white);
+  padding: 0.7rem 1.5rem;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(12px);
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-md);
   animation: fadeInUp 0.5s ease-out 0.3s both;
 }
 
 .date {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--black);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 0.04em;
 }
 
 .date-location {
-  font-size: 0.65rem;
+  font-size: 0.68rem;
   font-weight: 500;
-  color: var(--pink);
+  color: rgba(255, 255, 255, 0.75);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 1.25rem;
+  animation: fadeInUp 0.5s ease-out 0.45s both;
+}
+
+.hero-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.7rem 1.5rem;
+  border-radius: var(--radius-full);
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.22s ease;
+}
+
+.hero-btn.primary {
+  background: white;
+  color: var(--blue);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.hero-btn.primary:hover {
+  background: var(--bg-light);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+  transform: translateY(-1px);
+}
+
+.hero-btn.secondary {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(8px);
+}
+
+.hero-btn.secondary:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
 }
 
 .scroll-indicator {
@@ -124,15 +165,15 @@
 .scroll-indicator span {
   font-size: 0.6rem;
   font-weight: 500;
-  color: var(--blue);
+  color: rgba(255, 255, 255, 0.65);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
 }
 
 .scroll-arrow {
   width: 18px;
   height: 18px;
-  color: var(--sweet-blue);
+  color: rgba(255, 255, 255, 0.65);
 }
 
 .congress-info {
@@ -209,10 +250,16 @@
 
 @media screen and (min-width: 720px) and (max-width: 1023px) {
   .hero {
-    min-height: 75vh;
+    min-height: 80vh;
     padding: 5rem 2rem 3rem;
-    background: 
-      linear-gradient(180deg, transparent 0%, var(--bg) 100%),
+    background:
+      linear-gradient(
+        180deg,
+        rgba(13, 27, 42, 0.82) 0%,
+        rgba(13, 27, 42, 0.55) 45%,
+        rgba(13, 27, 42, 0.12) 70%,
+        var(--bg) 100%
+      ),
       url("/assets/images/montevideo.png");
     background-size: cover;
     background-position: center;
@@ -230,10 +277,16 @@
 
 @media screen and (min-width: 1024px) {
   .hero {
-    min-height: 70vh;
+    min-height: 75vh;
     padding: 5rem 2rem 3.5rem;
-    background: 
-      linear-gradient(180deg, transparent 0%, var(--bg) 100%),
+    background:
+      linear-gradient(
+        180deg,
+        rgba(13, 27, 42, 0.80) 0%,
+        rgba(13, 27, 42, 0.52) 45%,
+        rgba(13, 27, 42, 0.10) 70%,
+        var(--bg) 100%
+      ),
       url("/assets/images/montevideo.png");
     background-size: cover;
     background-position: center;
