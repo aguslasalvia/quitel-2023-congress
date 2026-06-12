@@ -5,13 +5,11 @@
     "": {
       "name": "quitel",
       "dependencies": {
-        "@mercadopago/sdk-react": "^0.0.12",
         "@paypal/react-paypal-js": "^8.0.0",
         "@studio-freight/lenis": "^1.0.16",
         "axios": "^1.4.0",
         "dotenv": "^16.1.4",
         "framer-motion": "^10.12.16",
-        "https-server": "^0.1.2",
         "lucide-react": "^1.7.0",
         "react": "^18.2.0",
         "react-copy-to-clipboard": "^5.1.0",
@@ -153,10 +151,6 @@
     "@jridgewell/sourcemap-codec": ["@jridgewell/sourcemap-codec@1.4.15", "", {}, "sha512-eF2rxCRulEKXHTRiDrDy6erMYWqNw4LPdQ8UQA4huuxaQsVeRPFl2oM8oDGxMFhJUWZf9McpLtJasDDZb/Bpeg=="],
 
     "@jridgewell/trace-mapping": ["@jridgewell/trace-mapping@0.3.18", "", { "dependencies": { "@jridgewell/resolve-uri": "3.1.0", "@jridgewell/sourcemap-codec": "1.4.14" } }, "sha512-w+niJYzMHdd7USdiH2U6869nqhD2nbfZXND5Yp93qIbEmnDNk7PD48o+YchRVpzMU7M6jVCbenTR7PA1FLQ9pA=="],
-
-    "@mercadopago/sdk-js": ["@mercadopago/sdk-js@0.0.3", "", {}, "sha512-kO48DNLHdfFAp3on12nuKdqNlEmw1x3+nM6wLd04BdWOXoFcAhkNMQV3AyUIanXdO/bB/dENakdacLT29297EQ=="],
-
-    "@mercadopago/sdk-react": ["@mercadopago/sdk-react@0.0.12", "", { "dependencies": { "@mercadopago/sdk-js": "^0.0.3" }, "peerDependencies": { "react": "^16.8.0 || ^17.0.0 || ^18.0.0", "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0" } }, "sha512-KqheU45sK46QlsIxv7TepJYAQyIBckx75zCXJldSLIVZLu82Y5qwC6GXs4xWU+WC9wd/YWbBT292H6FwXF2ewg=="],
 
     "@nodelib/fs.scandir": ["@nodelib/fs.scandir@2.1.5", "", { "dependencies": { "@nodelib/fs.stat": "2.0.5", "run-parallel": "^1.1.9" } }, "sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g=="],
 
@@ -367,8 +361,6 @@
     "has-tostringtag": ["has-tostringtag@1.0.0", "", { "dependencies": { "has-symbols": "^1.0.2" } }, "sha512-kFjcSNhnlGV1kyoGk7OXKSawH5JOb/LzUc5w9B02hOTO0dfFRjbHQKvg1d6cf3HbeUmtU9VbbV3qzZ2Teh97WQ=="],
 
     "hi-base32": ["hi-base32@0.5.1", "", {}, "sha512-EmBBpvdYh/4XxsnUybsPag6VikPYnN30td+vQk+GI3qpahVEG9+gTkG0aXVxTjBqQ5T6ijbWIu77O+C5WFWsnA=="],
-
-    "https-server": ["https-server@0.1.2", "", {}, "sha512-jmSTcw4eZxGQllYkJQm1NY65wzzHL2iCZFbOgnexBtYi+oeamLfY/zwc4nHKuEi8Wy16+V2QQTUN9L7sNBh+dw=="],
 
     "ignore": ["ignore@5.2.4", "", {}, "sha512-MAb38BcSbH0eHNBxn7ql2NH/kX33OkB3lZ1BNdh7ENeRChHTYsTvWrMubiIAMNS2llXEEgZ1MUOBtXChP3kaFQ=="],
 

@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
 import { motion } from "framer-motion";
-import { Download, MapPin, ArrowRight } from "lucide-react";
+import { Download, ArrowRight, ArrowUpRight } from "lucide-react";
 
 const topics = [
   "Quantum Chemistry and Methodology",
@@ -17,8 +17,8 @@ const topics = [
 ];
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 28 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+  hidden: { opacity: 0, y: 16 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" } },
 };
 
 export default function Home() {
@@ -34,63 +34,55 @@ export default function Home() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      {/* ── Hero ── */}
+      {/* ── Hero: magazine cover ── */}
       <div className="hero">
-        <div className="hero-content">
-          <img
-            src="assets/svg/quitel-letters.svg"
-            alt="QUITEL"
-            className="quitel-letters"
-          />
+        <div className="hero-grid">
+          <div className="hero-copy">
+            <p className="eyebrow hero-eyebrow">
+              XLVI International Congress · QUITEL / CHITEL
+            </p>
 
-          <div className="year-badge">
-            <span className="year">XLVI Edition · 2023</span>
+            <h1 className="hero-title">
+              Theoretical Chemists of <em>Latin Expression,</em> together again.
+            </h1>
+
+            <div className="hero-meta">
+              <span className="hero-meta-item">26–30 November 2023</span>
+              <span className="hero-meta-sep" aria-hidden="true" />
+              <span className="hero-meta-item">Montevideo, Uruguay</span>
+            </div>
+
+            <div className="hero-actions">
+              <NavLink to="/registration" className="btn-editorial">
+                Register now <ArrowRight size={15} />
+              </NavLink>
+              <NavLink to="/about" className="btn-text">
+                Read about the congress
+              </NavLink>
+            </div>
           </div>
 
-          <h1 className="title">
-            International Congress of Theoretical Chemists of Latin Expression
-          </h1>
-
-          <div className="date-badge">
-            <span className="date">26–30 November 2023</span>
-            <span className="date-location">Montevideo, Uruguay</span>
-          </div>
-
-          <div className="hero-actions">
-            <NavLink to="/registration" className="hero-btn primary">
-              Register now <ArrowRight size={16} />
-            </NavLink>
-            <NavLink to="/about" className="hero-btn secondary">
-              Learn more
-            </NavLink>
-          </div>
+          <figure className="figure hero-figure">
+            <img src="assets/images/montevideo.png" alt="Montevideo seen from the Río de la Plata" />
+            <figcaption>Montevideo · Río de la Plata</figcaption>
+          </figure>
         </div>
-
-        <a href="#congress-info" className="scroll-indicator">
-          <span>Discover more</span>
-          <svg
-            className="scroll-arrow"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <path d="M12 5v14M19 12l-7 7-7-7" />
-          </svg>
-        </a>
       </div>
 
       {/* ── Congress info ── */}
-      <section className="congress-info" id="congress-info">
+      <section className="page-body" id="congress-info">
         <motion.div
-          className="info-box"
+          className="editorial-section"
           variants={variants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
         >
-          <h2 className="info-title">What we aim for</h2>
-          <div className="info-text">
+          <div className="section-label">
+            <span className="section-num">01</span>
+            <h2 className="section-title">What we aim for</h2>
+          </div>
+          <div className="section-content prose">
             <p>
               Since its first edition in Modena, this prestigious congress aims to bring
               together scientists from all Latin American countries to share their interest
@@ -100,92 +92,102 @@ export default function Home() {
         </motion.div>
 
         <motion.div
-          className="info-box"
+          className="editorial-section"
           variants={variants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
         >
-          <h2 className="info-title">This year&apos;s edition</h2>
-          <div className="info-text">
+          <div className="section-label">
+            <span className="section-num">02</span>
+            <h2 className="section-title">This year&apos;s edition</h2>
+          </div>
+          <div className="section-content prose">
             <p>
               This is the first edition of our QUITEL congress after the pandemic and for
               that it is so important to us to recover the capacity to be together in our
               friendly QUITEL society.
             </p>
-            <br />
             <p>
               This year it will be developed in Uruguay. The 2024 edition will take place
               in Belgium and the following 2025 edition in Colombia.
             </p>
-            <br />
             <p>
               The programme will be designed to attract both academic and industrial
               interests. PhD students, postdocs and young researchers will have plenty of
               opportunities to learn and to meet colleagues.
             </p>
-            <br />
             <p>
               <strong>The Scientific Programme will include the following topics:</strong>
             </p>
-          </div>
 
-          <div className="topics-grid">
-            {topics.map((topic, index) => (
-              <div key={index} className="topic-item">
-                <svg
-                  className="topic-icon"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                  <polyline points="22 4 12 14.01 9 11.01" />
-                </svg>
-                <span>{topic}</span>
-              </div>
-            ))}
-          </div>
+            <ul className="numbered-list two-col">
+              {topics.map((topic, index) => (
+                <li key={index}>
+                  <span className="li-num">{String(index + 1).padStart(2, "0")}</span>
+                  <span>{topic}</span>
+                </li>
+              ))}
+            </ul>
 
-          <div style={{ marginTop: "1.5rem" }}>
-            <a
-              className="button-long-blue"
-              href="assets/files/schedule-quitel2023.pdf"
-              download
-            >
-              <Download size={16} style={{ marginRight: "6px" }} />
-              Download Program
-            </a>
+            <div style={{ marginTop: "1.5rem" }}>
+              <a
+                className="btn-editorial outline"
+                href="assets/files/schedule-quitel2023.pdf"
+                download
+              >
+                <Download size={15} />
+                Download Program
+              </a>
+            </div>
           </div>
         </motion.div>
 
         <motion.div
-          className="info-box"
+          className="editorial-section"
           variants={variants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
         >
-          <h2 className="info-title">Where will it take place?</h2>
-          <div className="info-text">
+          <div className="section-label">
+            <span className="section-num">03</span>
+            <h2 className="section-title">Where will it take place?</h2>
+          </div>
+          <div className="section-content prose">
             <p>
               QUITEL 2023 will take place at Universidad de la República, Montevideo
               Uruguay, in the emblematic multifunctional building{" "}
               <NavLink to="/venue">José Luis Massera &quot;Faro&quot;</NavLink>, ideally
               located in the heart of the city near the riverside of the Río de La Plata.
             </p>
-            <br />
-            <p style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
-              <MapPin size={14} style={{ flexShrink: 0, color: "var(--sweet-blue)" }} />
-              <span>Senda Nelson Landoni 631, 11200 Montevideo</span>
-            </p>
-            <br />
+            <p>Senda Nelson Landoni 631, 11200 Montevideo.</p>
             <p>
               For more information please contact us at{" "}
               <a href="mailto:quitel2023@gmail.com">quitel2023@gmail.com</a>
             </p>
+            <div style={{ marginTop: "1.25rem" }}>
+              <NavLink to="/venue" className="btn-text">
+                Discover the venue <ArrowUpRight size={14} />
+              </NavLink>
+            </div>
           </div>
+        </motion.div>
+
+        {/* ── CTA band ── */}
+        <motion.div
+          className="cta-band"
+          variants={variants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+        >
+          <h2 className="cta-band-title">
+            Join us in <em>Montevideo</em> this November.
+          </h2>
+          <NavLink to="/registration" className="btn-editorial accent">
+            Register now <ArrowRight size={15} />
+          </NavLink>
         </motion.div>
       </section>
 

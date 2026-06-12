@@ -64,15 +64,17 @@ export default function AbstractForm() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <motion.h1
-        className="page-title"
-        initial={{ opacity: 0, y: -20 }}
+      <motion.header
+        className="page-header"
+        initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
+        transition={{ duration: 0.5 }}
       >
-        <p className="page-title-p">Abstract</p>
-        <p className="page-title-p">Submission Form</p>
-      </motion.h1>
+        <p className="eyebrow">XLVI QUITEL 2023</p>
+        <h1 className="page-header-title">
+          Abstract <em>submission.</em>
+        </h1>
+      </motion.header>
 
       <div className="page-info form">
         <motion.div
@@ -84,8 +86,7 @@ export default function AbstractForm() {
           {/* Personal info */}
           <div className="form-card">
             <div className="form-card-header">
-              <h2>Personal Information</h2>
-              <span className="badge">XLVI QUITEL 2023</span>
+              <h2><span className="form-card-num">01</span> Personal Information</h2>
             </div>
             <div className="form-card-body">
               <div className={`form-field ${errors.email ? "error" : ""}`}>
@@ -140,7 +141,7 @@ export default function AbstractForm() {
           {/* Abstract title */}
           <div className="form-card">
             <div className="form-card-header">
-              <h2>Abstract Details</h2>
+              <h2><span className="form-card-num">02</span> Abstract Details</h2>
             </div>
             <div className="form-card-body">
               <div className={`form-field ${errors.title ? "error" : ""}`}>
@@ -162,7 +163,7 @@ export default function AbstractForm() {
           {/* File uploads */}
           <div className="form-card">
             <div className="form-card-header">
-              <h2>Upload Abstract</h2>
+              <h2><span className="form-card-num">03</span> Upload Abstract</h2>
             </div>
             <div className="form-card-body">
               <div className="form-note">
@@ -237,7 +238,7 @@ export default function AbstractForm() {
           <div className="form-actions">
             <button
               className="btn btn-secondary"
-              onClick={() => navigate("/abstract-submission")}
+              onClick={() => navigate("/registration")}
             >
               Back
             </button>

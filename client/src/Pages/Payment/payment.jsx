@@ -1,28 +1,7 @@
 import { motion } from "framer-motion";
 import Footer from "../../components/Footer/Footer";
-import { CreditCard, ExternalLink } from "lucide-react";
-
-const earlyRows = [
-  { label: "Postdocs / Researchers / Professors", price: "USD 405" },
-  { label: "Master / PhD Students", price: "USD 270" },
-  { label: "Undergraduate Student", price: "USD 225" },
-];
-
-const earlyExtras = [
-  { label: "Accompanying", price: "USD 180" },
-  { label: "Closing dinner", price: "USD 40" },
-];
-
-const lateRows = [
-  { label: "Postdocs / Researchers / Professors", price: "USD 450" },
-  { label: "Master / PhD Students", price: "USD 300" },
-  { label: "Undergraduate Student", price: "USD 250" },
-];
-
-const lateExtras = [
-  { label: "Accompanying", price: "USD 200" },
-  { label: "Closing dinner", price: "USD 40" },
-];
+import FeeTables from "../../components/FeeTables/FeeTables";
+import { ExternalLink } from "lucide-react";
 
 const steps = [
   {
@@ -48,7 +27,7 @@ const steps = [
 ];
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 16 },
   visible: (i) => ({ opacity: 1, y: 0, transition: { delay: i * 0.08, duration: 0.45 } }),
 };
 
@@ -62,143 +41,80 @@ export default function Payment() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <motion.h1
-        className="page-title"
-        initial={{ opacity: 0, y: -20 }}
+      <motion.header
+        className="page-header"
+        initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45 }}
+        transition={{ duration: 0.5 }}
       >
-        <p className="page-title-p">Payment</p>
-        <p className="page-title-p">PayPal Payment</p>
-      </motion.h1>
+        <p className="eyebrow">Payment</p>
+        <h1 className="page-header-title">
+          Pay via <em>PayPal.</em>
+        </h1>
+        <p className="page-header-lead">
+          Payments can be made with PayPal using a credit or debit card. Please kindly
+          specify in the PayPal note which fees are being paid. We thank you in advance.
+        </p>
+      </motion.header>
 
-      <div className="page-info">
-        {/* Intro */}
-        <motion.div
-          className="info-box"
+      <div className="page-body">
+        {/* Pricing tables */}
+        <motion.section
+          className="editorial-section"
           custom={0}
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
         >
-          <div className="section-header">
-            <CreditCard size={18} />
-            <h2 className="info-title">Registration fee payment</h2>
+          <div className="section-label">
+            <span className="section-num">01</span>
+            <h2 className="section-title">Rates</h2>
           </div>
-          <div className="info-text">
-            <p>
-              Payments can be made with <strong>PayPal</strong> using a credit or debit
-              card. The fees are the same as specified on the previous page.
-            </p>
-            <p style={{ marginTop: "0.5rem" }}>
-              Please kindly specify in the PayPal note which fees are being paid. We
-              thank you in advance.
-            </p>
+          <div className="section-content">
+            <FeeTables />
           </div>
-        </motion.div>
+        </motion.section>
 
-        {/* Pricing table */}
-        <motion.div
+        {/* Steps */}
+        <motion.section
+          className="editorial-section"
           custom={1}
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
         >
-          <div className="pricing-section">
-            <div className="pricing-card">
-              <div className="pricing-header">
-                <p className="pricing-eyebrow">Early registration</p>
-                <p className="pricing-period">Until August 18th</p>
-              </div>
-              <div className="pricing-body">
-                <p className="pricing-section-label">By level</p>
-                {earlyRows.map((row) => (
-                  <div key={row.label} className="pricing-row">
-                    <span className="pricing-row-label">{row.label}</span>
-                    <span className="pricing-price">{row.price}</span>
-                  </div>
-                ))}
-                <p className="pricing-section-label">Additional</p>
-                {earlyExtras.map((row) => (
-                  <div key={row.label} className="pricing-row">
-                    <span className="pricing-row-label">{row.label}</span>
-                    <span className="pricing-price">{row.price}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="pricing-card">
-              <div className="pricing-header late">
-                <p className="pricing-eyebrow">Standard registration</p>
-                <p className="pricing-period">From August 18th</p>
-              </div>
-              <div className="pricing-body">
-                <p className="pricing-section-label">By level</p>
-                {lateRows.map((row) => (
-                  <div key={row.label} className="pricing-row">
-                    <span className="pricing-row-label">{row.label}</span>
-                    <span className="pricing-price">{row.price}</span>
-                  </div>
-                ))}
-                <p className="pricing-section-label">Additional</p>
-                {lateExtras.map((row) => (
-                  <div key={row.label} className="pricing-row">
-                    <span className="pricing-row-label">{row.label}</span>
-                    <span className="pricing-price">{row.price}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
+          <div className="section-label">
+            <span className="section-num">02</span>
+            <h2 className="section-title">How to pay via PayPal</h2>
           </div>
-        </motion.div>
-
-        {/* Steps */}
-        <motion.div
-          className="info-box"
-          custom={2}
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          <h2 className="info-title" style={{ marginBottom: "1rem" }}>
-            How to pay via PayPal
-          </h2>
-          <div className="steps-list">
-            {steps.map((step, i) => (
-              <div key={i} className="step-item">
-                <div className="step-number">{i + 1}</div>
-                <div className="step-content">
-                  <p className="step-text">{step.text}</p>
-                  <img
-                    src={step.image}
-                    alt={step.alt}
-                    className="step-image"
-                  />
+          <div className="section-content">
+            <div className="steps-list">
+              {steps.map((step, i) => (
+                <div key={i} className="step-item">
+                  <div className="step-number">{String(i + 1).padStart(2, "0")}</div>
+                  <div className="step-content">
+                    <p className="step-text">{step.text}</p>
+                    <img src={step.image} alt={step.alt} className="step-image" />
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
 
-          <div style={{ marginTop: "1.75rem" }}>
-            <a
-              className="button-long-PP"
-              href="https://www.paypal.com/paypalme/fundaquim"
-              rel="noreferrer"
-              target="_blank"
-            >
-              <ExternalLink size={15} style={{ marginRight: "6px" }} />
-              <span style={{ color: "black", fontWeight: "800" }}>Continue to </span>
-              <i>
-                <span style={{ color: "#002E80", fontWeight: "800" }}>Pay</span>
-                <span style={{ color: "#0094D3", fontWeight: "800" }}>Pal</span>
-              </i>
-            </a>
+            <div style={{ marginTop: "1.75rem" }}>
+              <a
+                className="btn-editorial"
+                href="https://www.paypal.com/paypalme/fundaquim"
+                rel="noreferrer"
+                target="_blank"
+              >
+                <ExternalLink size={15} />
+                Continue to PayPal
+              </a>
+            </div>
           </div>
-        </motion.div>
+        </motion.section>
       </div>
 
       <Footer />

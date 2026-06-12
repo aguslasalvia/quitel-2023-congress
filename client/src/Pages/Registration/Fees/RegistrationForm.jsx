@@ -70,15 +70,17 @@ export default function RegistrationForm() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <motion.h1
-        className="page-title"
-        initial={{ opacity: 0, y: -20 }}
+      <motion.header
+        className="page-header"
+        initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
+        transition={{ duration: 0.5 }}
       >
-        <p className="page-title-p">Registration</p>
-        <p className="page-title-p">QUITEL / CHITEL 2023</p>
-      </motion.h1>
+        <p className="eyebrow">QUITEL / CHITEL 2023</p>
+        <h1 className="page-header-title">
+          Registration <em>form.</em>
+        </h1>
+      </motion.header>
 
       <div className="page-info form">
         <motion.div
@@ -89,7 +91,7 @@ export default function RegistrationForm() {
         >
           <div className="form-card">
             <div className="form-card-header">
-              <h2>Personal Information</h2>
+              <h2><span className="form-card-num">01</span> Personal Information</h2>
               <span className="badge">Required</span>
             </div>
             <div className="form-card-body">
@@ -147,7 +149,7 @@ export default function RegistrationForm() {
 
           <div className="form-card">
             <div className="form-card-header">
-              <h2>Academic Background</h2>
+              <h2><span className="form-card-num">02</span> Academic Background</h2>
             </div>
             <div className="form-card-body">
               <div className={`form-field ${errors.educationLevel ? 'error' : ''}`}>
@@ -207,7 +209,7 @@ export default function RegistrationForm() {
 
           <div className="form-card">
             <div className="form-card-header">
-              <h2>Location</h2>
+              <h2><span className="form-card-num">03</span> Location</h2>
             </div>
             <div className="form-card-body">
               <div className="form-row-2">
@@ -262,7 +264,7 @@ export default function RegistrationForm() {
 
           <div className="form-card">
             <div className="form-card-header">
-              <h2>Participation Details</h2>
+              <h2><span className="form-card-num">04</span> Participation Details</h2>
             </div>
             <div className="form-card-body">
               <div className={`form-field ${errors.modality ? 'error' : ''}`}>
@@ -349,7 +351,8 @@ export default function RegistrationForm() {
 
           <div className="form-card">
             <div className="form-card-header">
-              <h2>Payment Receipts (Optional)</h2>
+              <h2><span className="form-card-num">05</span> Payment Receipts</h2>
+              <span className="badge">Optional</span>
             </div>
             <div className="form-card-body">
               <div className="form-note">

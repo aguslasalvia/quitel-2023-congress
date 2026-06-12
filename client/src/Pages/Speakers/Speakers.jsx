@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import Footer from "../../components/Footer/Footer";
-import { ExternalLink, Download } from "lucide-react";
+import { ArrowUpRight, Download } from "lucide-react";
 
 const speakers = [
   { name: "Adrian Roitberg", link: "https://scholar.google.com/citations?user=bDtZleMAAAAJ", affiliation: "University of Florida, USA", role: "Dr." },
@@ -26,62 +26,72 @@ export default function Speakers() {
   window.scrollTo(0, 0);
 
   return (
-    <motion.div 
+    <motion.div
       className="page-wrapper"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <motion.h1 
-        className="page-title"
-        initial={{ opacity: 0, y: -20 }}
+      <motion.header
+        className="page-header"
+        initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
+        transition={{ duration: 0.5 }}
       >
-        <p className="page-title-p">Speakers</p>
-        <p className="page-title-p">Confirmed speakers</p>
-      </motion.h1>
+        <p className="eyebrow">QUITEL / CHITEL 2023</p>
+        <h1 className="page-header-title">
+          Confirmed <em>speakers.</em>
+        </h1>
+        <p className="page-header-lead">
+          Seventeen researchers from across Latin America, Europe and North America.
+        </p>
+      </motion.header>
 
-      <div className="page-info">
-        <motion.div 
-          className="info-box"
-          initial={{ opacity: 0, y: 20 }}
+      <div className="page-body">
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
+          transition={{ delay: 0.15, duration: 0.5 }}
+          style={{ paddingTop: "1.5rem" }}
         >
-          <div className="speakers-grid">
+          <ul className="speaker-index two-col">
             {speakers.map((speaker, index) => (
-              <motion.a
-                key={index}
-                href={speaker.link}
-                target="_blank"
-                rel="noreferrer"
-                className="speaker-item"
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.12 + index * 0.03 }}
-              >
-                <div className="speaker-avatar">
-                  {speaker.name.split(' ').map(n => n[0]).slice(0, 2).join('')}
-                </div>
-                <div className="speaker-content">
-                  <span className="speaker-role">{speaker.role}</span>
-                  <span className="speaker-name">{speaker.name}</span>
-                  <span className="speaker-affiliation">{speaker.affiliation}</span>
-                </div>
-                <ExternalLink size={15} className="speaker-link" />
-              </motion.a>
+              <li key={index}>
+                <a
+                  href={speaker.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="speaker-row"
+                >
+                  <span className="speaker-num">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className="speaker-content">
+                    <span className="speaker-name">
+                      {speaker.role} {speaker.name}
+                    </span>
+                    <span className="speaker-affiliation">{speaker.affiliation}</span>
+                  </span>
+                  <ArrowUpRight size={15} className="speaker-link" />
+                </a>
+              </li>
             ))}
-          </div>
+          </ul>
 
-          <a className="button-long-blue" href="assets/files/schedule-quitel2023.pdf" download>
-            <Download size={16} />
-            Download Program
-          </a>
+          <div style={{ marginTop: "2rem" }}>
+            <a
+              className="btn-editorial outline"
+              href="assets/files/schedule-quitel2023.pdf"
+              download
+            >
+              <Download size={15} />
+              Download Program
+            </a>
+          </div>
         </motion.div>
       </div>
 
       <Footer />
     </motion.div>
-  )
+  );
 }

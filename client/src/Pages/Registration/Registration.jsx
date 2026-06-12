@@ -1,10 +1,10 @@
 import { NavLink } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
 import { motion } from "framer-motion";
-import { Calendar, FileText, Download, Send, Maximize, UserPlus, ClipboardCheck } from "lucide-react";
+import { Download, Send, ArrowRight } from "lucide-react";
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 22 },
+  hidden: { opacity: 0, y: 16 },
   visible: (i) => ({
     opacity: 1,
     y: 0,
@@ -22,18 +22,20 @@ export default function Registration() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <motion.h1
-        className="page-title"
-        initial={{ opacity: 0, y: -20 }}
+      <motion.header
+        className="page-header"
+        initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45 }}
+        transition={{ duration: 0.5 }}
       >
-        <p className="page-title-p">QUITEL / CHITEL 2023</p>
-        <p className="page-title-p">Registration</p>
-      </motion.h1>
+        <p className="eyebrow">QUITEL / CHITEL 2023</p>
+        <h1 className="page-header-title">
+          Join the <em>congress.</em>
+        </h1>
+      </motion.header>
 
-      <div className="page-info">
-        {/* Option cards */}
+      <div className="page-body">
+        {/* Option panels */}
         <motion.div
           custom={0}
           variants={fadeUp}
@@ -42,97 +44,82 @@ export default function Registration() {
           viewport={{ once: true }}
         >
           <div className="reg-options-grid">
-            <div className="reg-option-card blue">
-              <div className="reg-option-icon blue">
-                <UserPlus size={28} />
-              </div>
-              <h2 className="reg-option-title">Pre-registration</h2>
+            <div className="reg-option-panel">
+              <p className="eyebrow">Step one</p>
+              <h2 className="reg-option-title">
+                <em>Pre-</em>registration
+              </h2>
               <p className="reg-option-text">
                 Submit the pre-registration form to receive information about the congress
                 and confirm your interest in attending.
               </p>
-              <NavLink className="button-long-blue" to="/preregistration-form">
-                <UserPlus size={15} style={{ marginRight: "5px" }} />
-                Pre-register now
+              <NavLink className="btn-editorial outline" to="/preregistration-form">
+                Pre-register now <ArrowRight size={15} />
               </NavLink>
             </div>
 
-            <div className="reg-option-card pink">
-              <div className="reg-option-icon pink">
-                <ClipboardCheck size={28} />
-              </div>
-              <h2 className="reg-option-title">Registration</h2>
+            <div className="reg-option-panel">
+              <p className="eyebrow">Step two</p>
+              <h2 className="reg-option-title">
+                Full <em>registration</em>
+              </h2>
               <p className="reg-option-text">
                 Ready to attend? Submit the full registration form and complete your
                 payment to secure your spot at the congress.
               </p>
-              <NavLink className="button-long-pink" to="/registration-info">
-                <ClipboardCheck size={15} style={{ marginRight: "5px" }} />
-                Register now
+              <NavLink className="btn-editorial accent" to="/registration-info">
+                Register now <ArrowRight size={15} />
               </NavLink>
             </div>
           </div>
         </motion.div>
 
         {/* Abstract submission */}
-        <motion.div
-          className="info-box"
+        <motion.section
+          className="editorial-section"
           custom={1}
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
         >
-          <div className="section-header">
-            <FileText size={18} />
-            <h2 className="info-title">Abstract Submission</h2>
+          <div className="section-label">
+            <span className="section-num">→</span>
+            <h2 className="section-title">Abstract submission</h2>
           </div>
-
-          <div className="dates-grid">
-            <div className="date-card primary">
-              <div className="date-icon">
-                <Calendar size={18} />
+          <div className="section-content prose">
+            <div className="dates-list" style={{ maxWidth: "480px" }}>
+              <div className="date-row primary">
+                <span className="date-row-label">Submission deadline</span>
+                <span className="date-row-value">August 18th</span>
               </div>
-              <div className="date-content">
-                <span className="date-label">Abstract Submission Deadline</span>
-                <span className="date-value">August 18th</span>
+              <div className="date-row">
+                <span className="date-row-label">Modifications requested before</span>
+                <span className="date-row-value">September 1st</span>
               </div>
             </div>
 
-            <div className="date-card">
-              <div className="date-icon secondary">
-                <FileText size={18} />
-              </div>
-              <div className="date-content">
-                <span className="date-label">Modifications Requested Before</span>
-                <span className="date-value">September 1st</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="poster-info">
-            <Maximize size={16} />
-            <span>
+            <p className="poster-info">
               Poster dimensions: <strong>120 cm length × 80 cm width</strong>
-            </span>
-          </div>
+            </p>
 
-          <div className="abstract-actions">
-            <a
-              className="button-long-blue"
-              href="https://docs.google.com/document/d/1DG2FIFkAObM5T6Ieq0-NB5TVfEwQ0PjqkFTK7xs90VY/edit"
-              rel="noreferrer"
-              target="_blank"
-            >
-              <Download size={16} style={{ marginRight: "6px" }} />
-              Download Abstract Template
-            </a>
-            <NavLink className="button-long-pink" to="/abstract-submission-form">
-              <Send size={16} style={{ marginRight: "6px" }} />
-              Submit an Abstract
-            </NavLink>
+            <div className="abstract-actions">
+              <a
+                className="btn-editorial outline"
+                href="https://docs.google.com/document/d/1DG2FIFkAObM5T6Ieq0-NB5TVfEwQ0PjqkFTK7xs90VY/edit"
+                rel="noreferrer"
+                target="_blank"
+              >
+                <Download size={15} />
+                Download Abstract Template
+              </a>
+              <NavLink className="btn-editorial" to="/abstract-submission-form">
+                <Send size={15} />
+                Submit an Abstract
+              </NavLink>
+            </div>
           </div>
-        </motion.div>
+        </motion.section>
       </div>
 
       <Footer />

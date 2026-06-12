@@ -1,29 +1,7 @@
 import { motion } from "framer-motion";
 import Footer from "../../components/Footer/Footer";
 import CopyButton from "../../components/CopyButton/CopyButton";
-import { Landmark, Info } from "lucide-react";
-
-const earlyRows = [
-  { label: "Postdocs / Researchers / Professors", price: "USD 405" },
-  { label: "Master / PhD Students", price: "USD 270" },
-  { label: "Undergraduate Student", price: "USD 225" },
-];
-
-const earlyExtras = [
-  { label: "Accompanying", price: "USD 180" },
-  { label: "Closing dinner", price: "USD 40" },
-];
-
-const lateRows = [
-  { label: "Postdocs / Researchers / Professors", price: "USD 450" },
-  { label: "Master / PhD Students", price: "USD 300" },
-  { label: "Undergraduate Student", price: "USD 250" },
-];
-
-const lateExtras = [
-  { label: "Accompanying", price: "USD 200" },
-  { label: "Closing dinner", price: "USD 40" },
-];
+import FeeTables from "../../components/FeeTables/FeeTables";
 
 const BROU_accounts = [
   { number: "001570119-00006", currency: "UYU – Uruguayan Peso" },
@@ -57,23 +35,15 @@ const Santander_details = [
 ];
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 16 },
   visible: (i) => ({ opacity: 1, y: 0, transition: { delay: i * 0.08, duration: 0.45 } }),
 };
 
 /* eslint react/prop-types: 0 */
-function BankCard({ name, note, accounts, details, index }) {
+function BankCard({ name, note, accounts, details }) {
   return (
-    <motion.div
-      className="bank-card"
-      custom={index}
-      variants={fadeUp}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true }}
-    >
+    <div className="bank-card">
       <div className="bank-card-header">
-        <Landmark size={18} />
         <div>
           <p className="bank-name">{name}</p>
           {note && <p className="bank-note">{note}</p>}
@@ -101,7 +71,7 @@ function BankCard({ name, note, accounts, details, index }) {
           </div>
         ))}
       </div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -115,117 +85,70 @@ export default function WireTransfer() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <motion.h1
-        className="page-title"
-        initial={{ opacity: 0, y: -20 }}
+      <motion.header
+        className="page-header"
+        initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45 }}
+        transition={{ duration: 0.5 }}
       >
-        <p className="page-title-p">Payment</p>
-        <p className="page-title-p">Wire Transfer</p>
-      </motion.h1>
+        <p className="eyebrow">Payment</p>
+        <h1 className="page-header-title">
+          Wire <em>transfer.</em>
+        </h1>
+        <p className="page-header-lead">
+          Please kindly specify in the wire transfer description which fees are being
+          paid. Below you will find the available bank accounts — use the copy buttons
+          to grab any value.
+        </p>
+      </motion.header>
 
-      <div className="page-info">
-        {/* Intro */}
-        <motion.div
-          className="info-box"
+      <div className="page-body">
+        {/* Pricing tables */}
+        <motion.section
+          className="editorial-section"
           custom={0}
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
         >
-          <div className="section-header">
-            <Info size={18} />
-            <h2 className="info-title">Registration fee payment</h2>
+          <div className="section-label">
+            <span className="section-num">01</span>
+            <h2 className="section-title">Rates</h2>
           </div>
-          <div className="info-text">
-            <p>
-              The fees are the same as specified on the previous page. Please kindly
-              specify in the wire transfer description which fees are being paid. We
-              thank you in advance.
-            </p>
-            <p style={{ marginTop: "0.5rem" }}>
-              Below you will find the available bank accounts and their details.
-              Click any field to copy its value.
-            </p>
+          <div className="section-content">
+            <FeeTables />
           </div>
-        </motion.div>
+        </motion.section>
 
-        {/* Pricing table */}
-        <motion.div
+        {/* Bank accounts */}
+        <motion.section
+          className="editorial-section"
           custom={1}
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
         >
-          <div className="pricing-section">
-            <div className="pricing-card">
-              <div className="pricing-header">
-                <p className="pricing-eyebrow">Early registration</p>
-                <p className="pricing-period">Until August 18th</p>
-              </div>
-              <div className="pricing-body">
-                <p className="pricing-section-label">By level</p>
-                {earlyRows.map((row) => (
-                  <div key={row.label} className="pricing-row">
-                    <span className="pricing-row-label">{row.label}</span>
-                    <span className="pricing-price">{row.price}</span>
-                  </div>
-                ))}
-                <p className="pricing-section-label">Additional</p>
-                {earlyExtras.map((row) => (
-                  <div key={row.label} className="pricing-row">
-                    <span className="pricing-row-label">{row.label}</span>
-                    <span className="pricing-price">{row.price}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="pricing-card">
-              <div className="pricing-header late">
-                <p className="pricing-eyebrow">Standard registration</p>
-                <p className="pricing-period">From August 18th</p>
-              </div>
-              <div className="pricing-body">
-                <p className="pricing-section-label">By level</p>
-                {lateRows.map((row) => (
-                  <div key={row.label} className="pricing-row">
-                    <span className="pricing-row-label">{row.label}</span>
-                    <span className="pricing-price">{row.price}</span>
-                  </div>
-                ))}
-                <p className="pricing-section-label">Additional</p>
-                {lateExtras.map((row) => (
-                  <div key={row.label} className="pricing-row">
-                    <span className="pricing-row-label">{row.label}</span>
-                    <span className="pricing-price">{row.price}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
+          <div className="section-label">
+            <span className="section-num">02</span>
+            <h2 className="section-title">Bank accounts</h2>
           </div>
-        </motion.div>
-
-        {/* BROU */}
-        <BankCard
-          name="Banco República Oriental del Uruguay (BROU)"
-          note="Only for amounts greater than USD 100"
-          accounts={BROU_accounts}
-          details={BROU_details}
-          index={2}
-        />
-
-        {/* Santander */}
-        <BankCard
-          name="Banco Santander"
-          note="All amounts accepted"
-          accounts={Santander_accounts}
-          details={Santander_details}
-          index={3}
-        />
+          <div className="section-content">
+            <BankCard
+              name="Banco República Oriental del Uruguay (BROU)"
+              note="Only for amounts greater than USD 100"
+              accounts={BROU_accounts}
+              details={BROU_details}
+            />
+            <BankCard
+              name="Banco Santander"
+              note="All amounts accepted"
+              accounts={Santander_accounts}
+              details={Santander_details}
+            />
+          </div>
+        </motion.section>
       </div>
 
       <Footer />

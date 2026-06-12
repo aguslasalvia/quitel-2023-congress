@@ -34,7 +34,7 @@ export default function ErrorElement() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
       >
-        Page not found
+        Page not <em>found.</em>
       </motion.h1>
 
       <motion.p
@@ -51,7 +51,7 @@ export default function ErrorElement() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.46 }}
       >
-        <NavLink to="/" className="btn btn-primary">
+        <NavLink to="/" className="btn-editorial">
           Back to Homepage
         </NavLink>
       </motion.div>
