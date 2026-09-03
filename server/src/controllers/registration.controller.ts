@@ -1,5 +1,8 @@
 import { Request, Response, NextFunction } from "express";
-import { Register } from "../models/registration.model";
+import {
+  findRegistrationByEmail,
+  createRegistration as createRegistrationService,
+} from "../services/registration.service";
 
 export const searchExistenRegistration = async (
   req: Request,
@@ -7,16 +10,12 @@ export const searchExistenRegistration = async (
   next: NextFunction,
 ) => {
   const { email } = req.body;
-  await Register.findOne({ email }).then((data: any): void => {
-    if (data.email !== email) next();
-    else res.status(404).json({ message: "Already Registered" });
-  });
+  const data = await findRegistrationByEmail(email);
+  if (!data) next();
+  else res.status(404).json({ message: "Already Registered" });
 };
 
 export const createRegistration = async (req: Request, res: Response) => {
-  const body = req.body;
-  const newRegistration = new Register(body);
-  await newRegistration.save().then(() => {
-    res.status(201).json({ message: "success" });
-  });
+  await createRegistrationService(req.body);
+  res.status(201).json({ message: "success" });
 };

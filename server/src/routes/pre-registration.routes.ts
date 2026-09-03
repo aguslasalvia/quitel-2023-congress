@@ -1,7 +1,7 @@
 import {
   searchExistenPreRegistration,
   createPreRegistration,
-} from "../controllers/preRegistration.controller";
+} from "../controllers/pre-registration.controller";
 import { Router } from "express";
 
 const router = Router();

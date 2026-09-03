@@ -1,5 +1,8 @@
-import { preRegister } from "../models/preRegistration.model";
 import { Request, Response, NextFunction } from "express";
+import {
+  findPreRegistrationByEmail,
+  createPreRegistration as createPreRegistrationService,
+} from "../services/pre-registration.service";
 
 // Search if exist registratio
 export const searchExistenPreRegistration = async (
@@ -8,19 +11,16 @@ export const searchExistenPreRegistration = async (
   next: NextFunction,
 ) => {
   const { email } = req.body;
-  await preRegister.findOne({ email }).then((data) => {
-    if (data) {
-      next();
-    }
+  const data = await findPreRegistrationByEmail(email);
+  if (data) {
+    next();
+  } else {
     res.status(404).json({ message: "No existe registro" });
-  });
+  }
 };
 
 // Create pre-registration
 export const createPreRegistration = async (req: Request, res: Response) => {
-  const body = req.body;
-  const newPreRegistration = new preRegister(body);
-  await newPreRegistration.save().then(() => {
-    res.status(201).json({ message: "success" });
-  });
+  await createPreRegistrationService(req.body);
+  res.status(201).json({ message: "success" });
 };

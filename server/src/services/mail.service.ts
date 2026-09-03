@@ -6,8 +6,8 @@ const mail = createTransport({
   port: 465, // Default Gmail SMTP  port
   secure: true,
   auth: {
-    user: "your_mail", // Sender email
-    pass: "your_secret(previous already deleted)", // Password created from gmail for apps
+    user: process.env.MAIL_USER, // Sender email
+    pass: process.env.MAIL_PASS, // Password created from gmail for apps
   },
 });
 
@@ -19,7 +19,7 @@ export const sendMail = (
 ): void => {
   // Mail individual options
   let mailOptions = {
-    from: "sender",
+    from: process.env.MAIL_USER,
     to: receiver["email"], // receiver
     subject: subject,
     text: `${receiver["firstName"]} ${receiver["lastName"]} : \n ${message}`,
